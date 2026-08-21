@@ -1,1009 +1,499 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URAI SOLUTIONS | Enterprise Software & Operational Tech Partner</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>URAI SOLUTIONS — Operational Tech & Enterprise Systems</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Tailwind Configuration -->
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        brand: {
-                            dark: '#050811',
-                            card: '#0B1021',
-                            border: '#1E293B',
-                            primary: '#007AFF',
-                            accent: '#00D2FF',
-                            glow: 'rgba(0, 122, 255, 0.15)',
-                            text: '#94A3B8'
-                        }
-                    },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#030611',
+                            900: '#070B19',
+                            800: '#0F172A',
+                            700: '#1E293B',
+                        },
+                        electric: '#007AFF',
+                        cyanGlow: '#00D2FF',
                     }
                 }
             }
         }
     </script>
-
     <style>
-        /* Custom Hairline Borders & Glassmorphic Utilities */
         body {
-            background-color: #050811;
+            background-color: #030611;
             color: #F8FAFC;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
         }
-
-        .border-hairline {
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .border-hairline-blue {
-            border: 1px solid rgba(0, 122, 255, 0.25);
+        .glass-panel-hover {
+            transition: all 0.3s ease;
         }
-
-        .bg-glass {
-            background: rgba(11, 16, 33, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+        .glass-panel-hover:hover {
+            border-color: rgba(0, 122, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 122, 255, 0.15);
+            transform: translateY(-2px);
         }
-
-        .glow-effect {
-            box-shadow: 0 0 50px -10px rgba(0, 122, 255, 0.25);
-        }
-
-        .glow-accent {
-            box-shadow: 0 0 35px -5px rgba(0, 210, 255, 0.3);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050811;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #007AFF;
-        }
-
-        /* Subtle Ambient Glow Blobs */
-        .ambient-glow-1 {
-            position: absolute;
-            top: -10%;
-            left: 20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0,122,255,0.15) 0%, rgba(5,8,17,0) 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .ambient-glow-2 {
-            position: absolute;
-            top: 40%;
-            right: -5%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0,210,255,0.08) 0%, rgba(5,8,17,0) 70%);
-            pointer-events: none;
-            z-index: 0;
+        .glow-line {
+            background: linear-gradient(90deg, rgba(0,122,255,0) 0%, rgba(0,122,255,0.8) 50%, rgba(0,210,255,0) 100%);
         }
     </style>
 </head>
-<body class="antialiased text-slate-200 bg-[#050811] relative selection:bg-sky-500 selection:text-white">
+<body class="font-sans antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Ambient Lighting Backgrounds -->
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
-
-    <!-- ==========================================
-         1. NAVIGATION HEADER
-    =========================================== -->
-    <header class="sticky top-0 z-50 w-full bg-[#050811]/80 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+    <!-- NAVBAR HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- Brand Logo -->
-            <a href="#hero" class="flex items-center gap-3.5 group">
-                <div class="relative w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-sky-500 via-blue-600 to-cyan-400 group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-blue-500/20">
-                    <img src="LOGO URAI SOLUTIONS.jpeg" alt="Logo URAI SOLUTIONS" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/007AFF/FFFFFF?text=U';">
+            <!-- Brand Logo & Title (With Multi-Fallback Extension Logic) -->
+            <div class="flex items-center gap-3">
+                <div class="relative p-1 rounded-xl bg-slate-900 border border-slate-700/60 shadow-lg shadow-blue-950/50">
+                    <img src="logo.jpeg" 
+                         onerror="this.onerror=null; this.src='logo.jpg'; this.onerror=function(){this.src='LOGO URAI SOLUTIONS.jpeg';}" 
+                         alt="URAI SOLUTIONS Logo" 
+                         class="w-10 h-10 rounded-lg object-contain">
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-extrabold text-lg tracking-wider text-white flex items-center gap-1.5">
-                        URAI <span class="text-sky-400 font-medium text-xs tracking-widest uppercase bg-blue-950/80 px-2 py-0.5 rounded border border-blue-500/30">SOLUTIONS</span>
-                    </span>
-                    <span class="text-[10px] font-mono text-slate-400 tracking-tight">OPERATIONAL TECH & SYSTEM</span>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl font-extrabold tracking-wider text-white">URAI</span>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30">SOLUTIONS</span>
+                    </div>
+                    <p class="text-[10px] font-mono tracking-widest text-slate-400 uppercase">Operational Tech & Systems</p>
                 </div>
-            </a>
+            </div>
 
-            <!-- Desktop Nav Links (Minimalist Text, No Unnecessary Icons) -->
-            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-300">
-                <a href="#portofolio" class="hover:text-sky-400 transition-colors">Portofolio Aplikasi</a>
-                <a href="#solusi" class="hover:text-sky-400 transition-colors">Pilar Solusi</a>
-                <a href="#arsitektur" class="hover:text-sky-400 transition-colors">Arsitektur Systems</a>
-                <a href="#track-record" class="hover:text-sky-400 transition-colors">Track Record</a>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#featured" class="hover:text-blue-400 transition-colors">Featured Module</a>
+                <a href="#portfolio" class="hover:text-blue-400 transition-colors">Portofolio Aplikasi</a>
+                <a href="#pilar" class="hover:text-blue-400 transition-colors">Pilar Solusi</a>
+                <a href="#contact" class="hover:text-blue-400 transition-colors">Kontak & Diskusi</a>
             </nav>
 
-            <!-- Header Action Button -->
-            <div class="flex items-center gap-4">
-                <a href="#kontak" class="relative inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 rounded-lg shadow-lg shadow-blue-600/30 transition-all duration-300 border border-sky-300/30">
-                    Diskusi Proyek
+            <!-- CTA Button -->
+            <div>
+                <a href="https://wa.me/6282254127596?text=Halo%20URAI%20SOLUTIONS,%20saya%20ingin%20diskusi%20mengenai%20pengembangan%20sistem%20aplikasi." 
+                   target="_blank" 
+                   class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-semibold text-xs text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all shadow-lg shadow-blue-600/25 border border-blue-400/30">
+                    DISKUSI PROYEK
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- ==========================================
-         2. HERO SECTION
-    =========================================== -->
-    <section id="hero" class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <!-- HERO SECTION -->
+    <section class="relative pt-36 pb-20 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/15 blur-[120px] rounded-full pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            
-            <div class="text-center max-w-4xl mx-auto space-y-6">
-                <!-- Status Badge -->
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-sky-500/30 text-sky-300 text-xs font-mono tracking-wide">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>ENTERPRISE-GRADE SOFTWARE & OPERATIONAL TECH PARTNER</span>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel text-xs font-mono text-cyan-400 mb-6 border-blue-500/30">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    ENTERPRISE-GRADE SYSTEM DEVELOPMENT
                 </div>
-
-                <!-- Main Editorial Headline -->
-                <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
-                    Membangun Sistem & Aplikasi Presisi Tinggi untuk <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-cyan-300">Operasional Bisnis Real</span>.
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-6">
+                    Membangun Solusi Sistem & Aplikasi Tepat Guna untuk <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500">Efisiensi Operasional</span>
                 </h1>
-
-                <!-- Subheadline -->
-                <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
-                    Bukan sekadar software. URAI SOLUTIONS merancang sistem otomatisasi workflow, efisiensi armada fisik, pencatatan keuangan, hingga manajemen manufaktur yang terukur dan disesuaikan 100% dengan SOP perusahaan Anda.
+                <p class="text-lg text-slate-300 leading-relaxed mb-8">
+                    URAI SOLUTIONS merancang aplikasi kustom yang siap memodernisasi alur kerja, otomatisasi administrasi, pengawasan armada, serta pengontrolan arus kas bisnis tanpa kerumitan.
                 </p>
-
-                <!-- Hero Action Buttons -->
-                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#portofolio" class="w-full sm:w-auto px-7 py-3.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm rounded-lg shadow-lg shadow-sky-500/20 transition-all text-center">
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#portfolio" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-lg shadow-blue-600/30">
                         Jelajahi Portofolio Aplikasi
                     </a>
-                    <a href="#kontak" class="w-full sm:w-auto px-7 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-slate-200 font-semibold text-sm rounded-lg border border-slate-700 transition-all text-center">
-                        Konsultasi Kebutuhan Sistem
+                    <a href="#featured" class="px-6 py-3 rounded-xl glass-panel hover:bg-slate-800/80 text-slate-300 font-semibold text-sm transition-all border-slate-700">
+                        Lihat Demo Sistem Fleet BBM
                     </a>
                 </div>
             </div>
-
-            <!-- HERO FEATURED SYSTEM SHOWCASE (Real Interactive Dashboard UI Mockup) -->
-            <div class="mt-14 relative max-w-5xl mx-auto">
-                <!-- Ambient Glow Behind Box -->
-                <div class="absolute inset-0 bg-blue-600/10 blur-3xl rounded-3xl -z-10"></div>
-
-                <div class="bg-[#0B1021] rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
-                    <!-- Browser / App Header Bar -->
-                    <div class="bg-slate-900/90 px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-                            <span class="ml-2 text-xs font-mono text-slate-400 bg-slate-950 px-3 py-1 rounded border border-white/5">
-                                https://app.uraisolutions.id/fleet-fuel-analytics
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-0.5 rounded">
-                                ● SYSTEM LIVE & SYNCED
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- App UI Main Body -->
-                    <div class="p-5 sm:p-7 space-y-6">
-                        
-                        <!-- Top Bar Dashboard Header -->
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-white/5">
-                            <div>
-                                <span class="text-xs font-mono text-sky-400 uppercase tracking-widest">FEATURED MODULE</span>
-                                <h3 class="text-xl font-bold text-white">Fleet Fuel & Odometer Monitoring System</h3>
-                                <p class="text-xs text-slate-400">Pengawasan Efisiensi BBM, Rasio KM/Liter & Deteksi Pemborosan Armada</p>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs font-mono">
-                                <span class="text-slate-400">Filter Cabang:</span>
-                                <select id="heroBranchFilter" onchange="updateHeroDashboard()" class="bg-slate-900 border border-slate-700 text-sky-300 rounded px-2.5 py-1.5 focus:outline-none focus:border-sky-500">
-                                    <option value="all">Semua Cabang (Pontianak, Singkawang, Ketapang)</option>
-                                    <option value="pnk">Cabang Utama - Pontianak</option>
-                                    <option value="skw">Depo Logistik - Singkawang</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Top Stat Cards (3 Columns) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-white/5">
-                                <span class="text-xs font-mono text-slate-400 block mb-1">Rata-Rata Konsumsi BBM</span>
-                                <div class="flex items-baseline gap-2">
-                                    <span id="heroKmlVal" class="text-2xl font-bold font-mono text-emerald-400">9.85</span>
-                                    <span class="text-xs text-slate-400">KM / Liter</span>
-                                </div>
-                                <span class="text-[11px] text-emerald-400/80 mt-2 block">✓ Normal (Sesuai Standard Standard Pabrikan)</span>
-                            </div>
-
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-white/5">
-                                <span class="text-xs font-mono text-slate-400 block mb-1">Total Pengeluaran BBM (Bulan Ini)</span>
-                                <div class="flex items-baseline gap-2">
-                                    <span id="heroFuelCostVal" class="text-2xl font-bold font-mono text-sky-400">Rp 42.850.000</span>
-                                </div>
-                                <span class="text-[11px] text-slate-400 mt-2 block">28 Kendaraan Operasional Terpantau</span>
-                            </div>
-
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-rose-500/20 bg-rose-950/10">
-                                <span class="text-xs font-mono text-rose-300 block mb-1">Alert Anomali Pemborosan</span>
-                                <div class="flex items-baseline gap-2">
-                                    <span id="heroAlertVal" class="text-2xl font-bold font-mono text-rose-400">1 Unit</span>
-                                    <span class="text-xs text-rose-300/70">(Butuh Service / Verifikasi)</span>
-                                </div>
-                                <span class="text-[11px] text-rose-400 mt-2 block">! Unit KB-8842-XX: KM/L Drop 34%</span>
-                            </div>
-                        </div>
-
-                        <!-- Chart & Recent Activity Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <!-- Chart Area (2 Cols) -->
-                            <div class="lg:col-span-2 bg-slate-900/60 p-4 rounded-xl border border-white/5 flex flex-col justify-between">
-                                <div class="flex items-center justify-between mb-3">
-                                    <span class="text-xs font-semibold text-slate-300">Tren Rasio Efisiensi KM/Liter (4 Mingguan)</span>
-                                    <span class="text-[11px] font-mono text-sky-400">Target Benchmark: 9.0 KM/L</span>
-                                </div>
-                                <div class="h-48 w-full">
-                                    <canvas id="heroFuelChart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- Realtime Drivers Log Table (1 Col) -->
-                            <div class="bg-slate-900/60 p-4 rounded-xl border border-white/5 flex flex-col justify-between">
-                                <span class="text-xs font-semibold text-slate-300 mb-3 block">Log Pengisian Terakhir Pengemudi</span>
-                                <div class="space-y-2.5 text-xs font-mono">
-                                    <div class="p-2.5 bg-slate-950 rounded border border-white/5 flex justify-between items-center">
-                                        <div>
-                                            <p class="font-bold text-white">Truck Box - KB 8122 XX</p>
-                                            <p class="text-[10px] text-slate-400">Driver: Supriadi | 45 Liter</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-emerald-400 font-bold">10.2 KM/L</span>
-                                            <span class="block text-[10px] text-slate-400">Valid</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="p-2.5 bg-slate-950 rounded border border-white/5 flex justify-between items-center">
-                                        <div>
-                                            <p class="font-bold text-white">Pickup GranMax - KB 9011 YY</p>
-                                            <p class="text-[10px] text-slate-400">Driver: Budi H. | 30 Liter</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-emerald-400 font-bold">11.1 KM/L</span>
-                                            <span class="block text-[10px] text-slate-400">Valid</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="p-2.5 bg-rose-950/30 rounded border border-rose-500/30 flex justify-between items-center">
-                                        <div>
-                                            <p class="font-bold text-rose-200">Tronton 10 Wheel - KB 8842 XX</p>
-                                            <p class="text-[10px] text-rose-300/70">Driver: Agus R. | 110 Liter</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-rose-400 font-bold">4.2 KM/L</span>
-                                            <span class="block text-[10px] text-rose-400">! Anomali</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- ==========================================
-         3. METRICS & TRACK RECORD (Typography Heavy)
-    =========================================== -->
-    <section id="track-record" class="py-16 border-y border-white/10 bg-[#070C1B]">
+    <div class="h-px w-full glow-line"></div>
+
+    <!-- FEATURED MODULE: FLEET FUEL MONITORING -->
+    <section id="featured" class="py-20 relative bg-slate-950/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-x-0 sm:divide-x divide-white/10">
-                
-                <div class="px-4">
-                    <span class="text-xs font-mono text-sky-400 block mb-1">REKAM JEJAK PROFESIONAL</span>
-                    <span class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight">16+</span>
-                    <span class="text-xs text-slate-400 block mt-2">Tahun Pengalaman Operasional FMCG, Heavy Equipment & Finance</span>
-                </div>
-
-                <div class="px-4">
-                    <span class="text-xs font-mono text-sky-400 block mb-1">SISTEM IMPLEMENTASI</span>
-                    <span class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight">100%</span>
-                    <span class="text-xs text-slate-400 block mt-2">Custom Logic Terintegrasi dengan SOP & Workflow Klien</span>
-                </div>
-
-                <div class="px-4">
-                    <span class="text-xs font-mono text-sky-400 block mb-1">AKURASI DATA & AUDIT</span>
-                    <span class="text-4xl sm:text-5xl font-extrabold font-mono text-emerald-400 tracking-tight">99.4%</span>
-                    <span class="text-xs text-slate-400 block mt-2">Pencegahan Risk / Fraud Operational & Audit Trail Transparan</span>
-                </div>
-
-                <div class="px-4">
-                    <span class="text-xs font-mono text-sky-400 block mb-1">MODEL PENYESUAIAN</span>
-                    <span class="text-4xl sm:text-5xl font-extrabold font-mono text-cyan-300 tracking-tight">Zero</span>
-                    <span class="text-xs text-slate-400 block mt-2">Biaya Langganan Tersembunyi (Opsi Jual Putus / Private Server)</span>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         4. PORTOFOLIO APLIKASI (Bento Grid Visual)
-    =========================================== -->
-    <section id="portofolio" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <span class="text-xs font-mono text-sky-400 uppercase tracking-widest block mb-2">PRODUK & PORTOFOLIO UTAMA</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Aplikasi & Sistem Teruji URAI SOLUTIONS.
-                    </h2>
-                    <p class="text-slate-400 text-sm mt-2 max-w-xl">
-                        Seluruh sistem dibangun berbasis kebutuhan lapangan nyata, mengutamakan performa cepat, tanpa beban biaya lisensi yang membebani bisnis Abah dan Klien.
-                    </p>
+                    <span class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase">FEATURED SYSTEM MODULE</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Fleet Fuel & Odometer Monitoring System</h2>
+                    <p class="text-sm text-slate-400 mt-1">Pengawasan Efisiensi BBM, Rasio KM/Liter & Deteksi Pemborosan Armada Operasional</p>
                 </div>
-
-                <!-- Filter Tabs -->
-                <div class="flex flex-wrap gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-white/10 text-xs font-medium">
-                    <button onclick="filterPortfolio('all')" id="btn-all" class="portfolio-tab-btn active px-4 py-2 rounded-lg bg-sky-500 text-slate-950 font-bold transition">Semua Solusi</button>
-                    <button onclick="filterPortfolio('fleet')" id="btn-fleet" class="portfolio-tab-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Fleet & Armada</button>
-                    <button onclick="filterPortfolio('manufacturing')" id="btn-manufacturing" class="portfolio-tab-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Apparel & RAB</button>
-                    <button onclick="filterPortfolio('retail')" id="btn-retail" class="portfolio-tab-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">POS & Retail</button>
-                    <button onclick="filterPortfolio('enterprise')" id="btn-enterprise" class="portfolio-tab-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Enterprise Workflow</button>
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> SYSTEM LIVE & SYNCED
+                    </span>
                 </div>
             </div>
 
-            <!-- Bento Grid Container -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                <!-- CARD 1: Fleet Fuel & Odometer System (Large Featured - 2 Cols) -->
-                <div class="portfolio-item fleet md:col-span-2 bg-[#0B1021] rounded-2xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between hover:border-sky-500/40 transition duration-300 group">
-                    <div>
-                        <div class="flex justify-between items-start gap-4 mb-4">
-                            <span class="px-3 py-1 bg-sky-950 text-sky-400 border border-sky-500/30 text-xs font-mono rounded-full">
-                                FLEET & LOGISTICS
-                            </span>
-                            <span class="text-xs font-mono text-emerald-400">● Live Enterprise App</span>
+            <!-- Dashboard Mockup Frame -->
+            <div class="glass-panel rounded-2xl p-6 border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Metric 1 -->
+                    <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <span class="text-xs font-mono text-slate-400 uppercase">Rata-Rata Konsumsi BBM</span>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-3xl font-black text-white">9.85</span>
+                            <span class="text-xs font-mono text-cyan-400">KM / Liter</span>
                         </div>
-                        <h3 class="text-2xl font-extrabold text-white group-hover:text-sky-300 transition-colors">
-                            Fleet Fuel & Odometer Monitoring System
-                        </h3>
-                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Sistem pemantauan konsumsi bahan bakar dan jarak tempuh kendaraan operasional. Menghitung rasio KM/Liter secara otomatis, mendeteksi anomali pemborosan BBM, serta memverifikasi foto bukti pengisian struk secara transparan.
-                        </p>
+                        <p class="text-[11px] text-emerald-400 font-mono mt-2">✓ Normal (Sesuai Standar Pabrikan)</p>
+                    </div>
+                    <!-- Metric 2 -->
+                    <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <span class="text-xs font-mono text-slate-400 uppercase">Total Pengeluaran BBM (Bulan Ini)</span>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-3xl font-black text-white">Rp 42.850.000</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-mono mt-2">28 Kendaraan Operasional Terpantau</p>
+                    </div>
+                    <!-- Metric 3 -->
+                    <div class="p-5 rounded-xl bg-slate-900/80 border border-red-900/40 bg-red-950/10">
+                        <span class="text-xs font-mono text-red-400 uppercase">Alert Anomali Pemborosan</span>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-3xl font-black text-red-500">1 Unit</span>
+                            <span class="text-xs font-mono text-red-400">(Butuh Service/Verifikasi)</span>
+                        </div>
+                        <p class="text-[11px] text-red-400 font-mono mt-2">! Unit KB-8842-XX: KM/L Drop 34%</p>
+                    </div>
+                </div>
 
-                        <!-- Mini UI Preview Box -->
-                        <div class="mt-6 p-4 bg-slate-950 rounded-xl border border-white/5 space-y-3 font-mono text-xs">
-                            <div class="flex justify-between items-center text-slate-300 pb-2 border-b border-white/5">
-                                <span>Algoritma Anomali BBM</span>
-                                <span class="text-emerald-400">Autocalculate Ratio [KM / L]</span>
-                            </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] text-center">
-                                <div class="p-2 bg-slate-900 rounded border border-white/5">
-                                    <span class="text-slate-400 block">KM Awal</span>
-                                    <span class="text-white font-bold">124.500</span>
-                                </div>
-                                <div class="p-2 bg-slate-900 rounded border border-white/5">
-                                    <span class="text-slate-400 block">KM Akhir</span>
-                                    <span class="text-white font-bold">124.950</span>
-                                </div>
-                                <div class="p-2 bg-slate-900 rounded border border-white/5">
-                                    <span class="text-slate-400 block">BBM di-isi</span>
-                                    <span class="text-sky-400 font-bold">45.0 Liter</span>
-                                </div>
-                                <div class="p-2 bg-emerald-950/40 border border-emerald-500/30 rounded">
-                                    <span class="text-emerald-300 block">Rasio Efisiensi</span>
-                                    <span class="text-emerald-400 font-bold">10.0 KM/L</span>
-                                </div>
-                            </div>
+                <!-- Chart & Activity Log Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Chart Container -->
+                    <div class="lg:col-span-2 p-5 rounded-xl bg-slate-900/60 border border-slate-800">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-mono font-semibold text-slate-300">Tren Rasio Efisiensi KM/Liter (4 Mingguan)</span>
+                            <span class="text-[11px] font-mono text-blue-400">Target Benchmark: 9.0 KM/L</span>
+                        </div>
+                        <div class="h-64 w-full">
+                            <canvas id="fuelChart"></canvas>
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-xs text-slate-400 font-mono">Modul: Web / AppSheet / Supabase</span>
-                        <button onclick="openDemoModal('fleet')" class="text-xs font-bold text-sky-400 hover:text-sky-300 uppercase tracking-wider">
-                            Uji Coba Demo →
+                    <!-- Fleet Driver Log Mockup -->
+                    <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono font-semibold text-slate-300 block mb-3">Log Pengisian Terakhir Pengemudi</span>
+                            <div class="space-y-3">
+                                <div class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-xs flex justify-between items-center">
+                                    <div>
+                                        <p class="font-bold text-slate-200">Truck Box - KB 8122 XX</p>
+                                        <p class="text-[10px] font-mono text-slate-500">Driver: Supriadi | 45 Liter</p>
+                                    </div>
+                                    <span class="text-xs font-mono text-emerald-400 font-bold">10.2 KM/L</span>
+                                </div>
+                                <div class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-xs flex justify-between items-center">
+                                    <div>
+                                        <p class="font-bold text-slate-200">Pickup GranMax - KB 9011 YY</p>
+                                        <p class="text-[10px] font-mono text-slate-500">Driver: Budi H. | 30 Liter</p>
+                                    </div>
+                                    <span class="text-xs font-mono text-emerald-400 font-bold">11.1 KM/L</span>
+                                </div>
+                                <div class="p-3 rounded-lg bg-red-950/20 border border-red-900/40 text-xs flex justify-between items-center">
+                                    <div>
+                                        <p class="font-bold text-red-300">Tronton 10 Wheel - KB 8842 XX</p>
+                                        <p class="text-[10px] font-mono text-red-400/80">Driver: Agus R. | 110 Liter</p>
+                                    </div>
+                                    <span class="text-xs font-mono text-red-400 font-bold">4.2 KM/L</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="openDemoModal('Fleet Fuel System', 'Sistem pelacak BBM dan Odometer real-time untuk armada bisnis.')" 
+                                class="mt-4 w-full py-2 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-400 text-xs font-mono transition">
+                            Uji Simulasi Input Driver →
                         </button>
                     </div>
                 </div>
-
-                <!-- CARD 2: Renzani.co (1 Col) -->
-                <div class="portfolio-item manufacturing bg-[#0B1021] rounded-2xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between hover:border-sky-500/40 transition duration-300 group">
-                    <div>
-                        <div class="flex justify-between items-start gap-4 mb-4">
-                            <span class="px-3 py-1 bg-amber-950 text-amber-400 border border-amber-500/30 text-xs font-mono rounded-full">
-                                APPAREL & RAB
-                            </span>
-                            <span class="text-xs font-mono text-amber-300">v3.4 Thermal</span>
-                        </div>
-                        <h3 class="text-xl font-extrabold text-white group-hover:text-sky-300 transition-colors">
-                            Renzani.co — Management RAB & Pembukuan Konveksi
-                        </h3>
-                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Sistem estimasi HPP/RAB produksi pakaian (potong, jahit, press, kancing), manajemen pesanan, arus kas, cetak struk thermal 58mm & ekspor Excel multi-sheet.
-                        </p>
-
-                        <!-- Highlights -->
-                        <div class="mt-6 space-y-2 text-xs font-mono text-slate-300">
-                            <div class="p-2 bg-slate-950 rounded flex justify-between">
-                                <span>Cetak Struk Thermal:</span>
-                                <span class="text-amber-400">58mm & JPG/WA</span>
-                            </div>
-                            <div class="p-2 bg-slate-950 rounded flex justify-between">
-                                <span>Fitur Backup:</span>
-                                <span class="text-emerald-400">Excel Multi-Sheet</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-xs text-slate-400 font-mono">Target: Industri Garment/Konveksi</span>
-                        <button onclick="openDemoModal('renzani')" class="text-xs font-bold text-sky-400 hover:text-sky-300 uppercase tracking-wider">
-                            Uji Coba Demo →
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CARD 3: Hybrid POS Kasir & Multi-Outlet (1 Col) -->
-                <div class="portfolio-item retail bg-[#0B1021] rounded-2xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between hover:border-sky-500/40 transition duration-300 group">
-                    <div>
-                        <div class="flex justify-between items-start gap-4 mb-4">
-                            <span class="px-3 py-1 bg-emerald-950 text-emerald-400 border border-emerald-500/30 text-xs font-mono rounded-full">
-                                RETAIL & SME
-                            </span>
-                            <span class="text-xs font-mono text-emerald-400">Hybrid System</span>
-                        </div>
-                        <h3 class="text-xl font-extrabold text-white group-hover:text-sky-300 transition-colors">
-                            Sistem POS Kasir & Multi-Outlet Financials
-                        </h3>
-                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Aplikasi transaksi kasir dengan mode offline-first (tanpa perlu koneksi internet konstan) dan sinkronisasi otomatis ke cloud server untuk laporan laba/rugi multi-outlet.
-                        </p>
-
-                        <div class="mt-6 p-3 bg-slate-950 rounded-xl border border-white/5 text-xs font-mono text-slate-300 space-y-1">
-                            <div class="flex justify-between">
-                                <span>Mode Offline:</span>
-                                <span class="text-emerald-400">Local Browser Storage</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Mode Online:</span>
-                                <span class="text-sky-400">Cloud GitHub Pages / Vercel</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-xs text-slate-400 font-mono">Target: Toko / Cafe / Retail</span>
-                        <button onclick="openDemoModal('pos')" class="text-xs font-bold text-sky-400 hover:text-sky-300 uppercase tracking-wider">
-                            Uji Coba Demo →
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CARD 4: Enterprise Branch Workflow & Audit System (2 Cols) -->
-                <div class="portfolio-item enterprise md:col-span-2 bg-[#0B1021] rounded-2xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between hover:border-sky-500/40 transition duration-300 group">
-                    <div>
-                        <div class="flex justify-between items-start gap-4 mb-4">
-                            <span class="px-3 py-1 bg-purple-950 text-purple-400 border border-purple-500/30 text-xs font-mono rounded-full">
-                                ENTERPRISE OPERATIONS
-                            </span>
-                            <span class="text-xs font-mono text-purple-300">SOP Compliance</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-white group-hover:text-sky-300 transition-colors">
-                            Dashboard Audit & Digital Workflow Cabang
-                        </h3>
-                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Otomatisasi alur verifikasi klaim, monitoring stok opname pergudangan, hingga pemantauan KPI tim distribusi secara real-time. Memangkas rantai administrasi manual dan mencegah potensi kecurangan operasional.
-                        </p>
-
-                        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs text-slate-300">
-                            <div class="p-3 bg-slate-950 rounded border border-white/5">
-                                <span class="text-slate-400 block text-[10px]">VERIFIKASI KLAIM</span>
-                                <span class="text-purple-300 font-bold">Auto-Validation</span>
-                            </div>
-                            <div class="p-3 bg-slate-950 rounded border border-white/5">
-                                <span class="text-slate-400 block text-[10px]">STOK OPNAME</span>
-                                <span class="text-sky-400 font-bold">Discrepancy Alert</span>
-                            </div>
-                            <div class="p-3 bg-slate-950 rounded border border-white/5">
-                                <span class="text-slate-400 block text-[10px]">KPI TRACKING</span>
-                                <span class="text-emerald-400 font-bold">Live Dashboard</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-xs text-slate-400 font-mono">Target: Perusahaan FMCG & Distributor</span>
-                        <button onclick="openDemoModal('workflow')" class="text-xs font-bold text-sky-400 hover:text-sky-300 uppercase tracking-wider">
-                            Uji Coba Demo →
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CARD 5: @korporatpedia Digital Platform (1 Col) -->
-                <div class="portfolio-item enterprise bg-[#0B1021] rounded-2xl border border-white/10 p-6 sm:p-8 flex flex-col justify-between hover:border-sky-500/40 transition duration-300 group">
-                    <div>
-                        <div class="flex justify-between items-start gap-4 mb-4">
-                            <span class="px-3 py-1 bg-cyan-950 text-cyan-400 border border-cyan-500/30 text-xs font-mono rounded-full">
-                                DIGITAL PLATFORM
-                            </span>
-                            <span class="text-xs font-mono text-cyan-300">Knowledge Hub</span>
-                        </div>
-                        <h3 class="text-xl font-extrabold text-white group-hover:text-sky-300 transition-colors">
-                            @korporatpedia — Corporate Productivity Media
-                        </h3>
-                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Ekosistem edukasi digital yang berfokus pada produktivitas kerja, analisis metrik penjualan (sales metrics), dan otomatisasi operasional untuk profesional.
-                        </p>
-                    </div>
-
-                    <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-xs text-slate-400 font-mono">Platform Edukasi & Media</span>
-                        <a href="https://instagram.com/korporatpedia" target="_blank" class="text-xs font-bold text-sky-400 hover:text-sky-300 uppercase tracking-wider">
-                            Kunjungi Channel →
-                        </a>
-                    </div>
-                </div>
-
             </div>
-
         </div>
     </section>
 
-    <!-- ==========================================
-         5. PILAR SOLUSI & ARSITEKTUR
-    =========================================== -->
-    <section id="solusi" class="py-20 bg-[#070C1B] border-y border-white/10">
+    <!-- PORTOFOLIO GRID (BENTO BOX) -->
+    <section id="portfolio" class="py-20 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-mono text-sky-400 uppercase tracking-widest block mb-2">MENGAPA URAI SOLUTIONS?</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Mengubah Karut-Marut Administrasi Menjadi Sistem Terstruktur Presisi.
-                </h2>
+            <div class="mb-12">
+                <span class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase">SYSTEM PORTFOLIO</span>
+                <h2 class="text-3xl font-extrabold text-white mt-1">Aplikasi Yang Telah Kami Bangun</h2>
+                <p class="text-sm text-slate-400 mt-1">Solusi teruji yang dirancang khusus untuk memecahkan kendala operasional lapangan</p>
             </div>
 
-            <!-- Comparison / Capabilities Table without Icons -->
-            <div class="bg-[#0B1021] rounded-2xl border border-white/10 overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-                    
-                    <!-- Col 1 -->
-                    <div class="p-8 space-y-4">
-                        <span class="text-xs font-mono text-sky-400 uppercase block">01. PENSERASIAN SOP NYATA</span>
-                        <h3 class="text-xl font-bold text-white">100% Mengikuti Alur Bisnis Anda</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            SaaS pasaran sering memaksa Anda mengubah cara kerja bisnis demi mengikuti keterbatasan aplikasi mereka. URAI SOLUTIONS membalik pendekatan ini: kami merancang sistem yang sepenuhnya tunduk pada aturan main bisnis Anda.
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Card 1: Renzani.co -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">APPAREL & MANUFACTURING</span>
+                            <span class="text-xs font-mono text-slate-500">v3.4.3 Robust</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Renzani.co — Pembukuan & Management RAB Konveksi</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                            Sistem kalkulasi RAB produksi garmen terperinci (jahit, potong, press, bahan baku), pencatatan order, cetak struk thermal 58mm, konversi JPG, serta pemantauan arus kas.
                         </p>
                     </div>
-
-                    <!-- Col 2 -->
-                    <div class="p-8 space-y-4">
-                        <span class="text-xs font-mono text-emerald-400 uppercase block">02. PRIVASI & KEPEMILIKAN DATA</span>
-                        <h3 class="text-xl font-bold text-white">Kepemilihan Database Penuh</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Data transaksi, kerahasiaan stok, hingga laporan keuangan adalah aset krusial. Sistem kami mendukung penggunaan Google Sheets Private, Supabase milik sendiri, hingga Database SQL Lokal tanpa ada ketergantungan sewa platform pihak ketiga.
-                        </p>
+                    <div>
+                        <button onclick="openDemoModal('Renzani.co', 'Sistem Pembukuan Konveksi, RAB & Management Arus Kas Garmen.')" 
+                                class="mb-4 text-xs text-cyan-400 hover:text-cyan-300 font-mono flex items-center gap-1">
+                            Lihat Rincian Fitur →
+                        </button>
+                        <div class="pt-4 border-t border-slate-800/80 flex justify-between items-center text-xs font-mono text-slate-300">
+                            <span>• Thermal Receipt Engine</span>
+                            <span class="text-blue-400">Live Production</span>
+                        </div>
                     </div>
-
-                    <!-- Col 3 -->
-                    <div class="p-8 space-y-4">
-                        <span class="text-xs font-mono text-cyan-300 uppercase block">03. EFISIENSI TANPA BEBAN ROUTINE</span>
-                        <h3 class="text-xl font-bold text-white">Tanpa Biaya Bulanan yang Mencekik</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Tersedia skema beli putus / *custom project investment*. Bisnis Anda mendapatkan lisensi penuh atas aplikasi tanpa perlu khawatir tarif berlangganan naik setiap kali pengguna/cabang Anda bertambah.
-                        </p>
-                    </div>
-
                 </div>
-            </div>
 
+                <!-- Card 2: Enterprise Branch Operations -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30">ENTERPRISE OPERATIONS</span>
+                            <span class="text-xs font-mono text-slate-500">Internal Web App</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Branch Workflow & Fraud Prevention System</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                            Aplikasi otomatisasi alur kerja administrasi cabang, verifikasi dokumen rutin, kontrol klaim biaya, serta minimasi potensi kesalahan manual dan fraud operasional.
+                        </p>
+                    </div>
+                    <div>
+                        <button onclick="openDemoModal('Branch Workflow System', 'Sistem Otomatisasi Administrasi Operasional Cabang & Kontrol Fraud.')" 
+                                class="mb-4 text-xs text-cyan-400 hover:text-cyan-300 font-mono flex items-center gap-1">
+                            Lihat Rincian Fitur →
+                        </button>
+                        <div class="pt-4 border-t border-slate-800/80 flex justify-between items-center text-xs font-mono text-slate-300">
+                            <span>• Workflow Automation</span>
+                            <span class="text-blue-400">Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: POS Kasir Hybrid -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">RETAIL & SME</span>
+                            <span class="text-xs font-mono text-slate-500">Hybrid Local/Cloud</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Smart POS & Multi-Outlet Cashflow System</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                            Sistem kasir toko dan manajemen laba rugi outlet yang dapat dijalankan secara offline maupun cloud web server tanpa biaya langganan bulanan yang memberatkan.
+                        </p>
+                    </div>
+                    <div>
+                        <button onclick="openDemoModal('Smart POS Hybrid', 'Sistem Kasir Offline/Online Tanpa Biaya Langganan Bulanan.')" 
+                                class="mb-4 text-xs text-cyan-400 hover:text-cyan-300 font-mono flex items-center gap-1">
+                            Lihat Rincian Fitur →
+                        </button>
+                        <div class="pt-4 border-t border-slate-800/80 flex justify-between items-center text-xs font-mono text-slate-300">
+                            <span>• Zero Monthly Fee</span>
+                            <span class="text-blue-400">Multi-Outlet</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- ==========================================
-         6. INTERACTIVE LIVE DEMO SIMULATOR MODAL
-    =========================================== -->
-    <div id="demoModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-[#0B1021] border border-white/10 rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl space-y-6">
-            
-            <!-- Modal Close Button -->
-            <button onclick="closeDemoModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white font-mono text-sm px-2.5 py-1 rounded bg-slate-900 border border-white/10">
-                ESC [X]
-            </button>
-
-            <div>
-                <span id="modalCategory" class="text-xs font-mono text-sky-400 uppercase tracking-widest block mb-1">INTERACTIVE SIMULATOR</span>
-                <h3 id="modalTitle" class="text-2xl font-bold text-white">Uji Coba Sistem URAI SOLUTIONS</h3>
-            </div>
-
-            <!-- Dynamic Simulator Body -->
-            <div id="modalContent" class="bg-slate-950 p-5 rounded-xl border border-white/5 space-y-4">
-                <!-- Content generated via JavaScript -->
-            </div>
-
-            <div class="flex justify-end gap-3 pt-2">
-                <button onclick="closeDemoModal()" class="px-5 py-2.5 rounded-lg bg-slate-900 text-slate-300 text-xs font-semibold hover:bg-slate-800 transition">
-                    Tutup Preview
-                </button>
-                <a href="#kontak" onclick="closeDemoModal()" class="px-5 py-2.5 rounded-lg bg-sky-500 text-slate-950 text-xs font-bold hover:bg-sky-400 transition">
-                    Konsultasi Implementasi Ini →
-                </a>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ==========================================
-         7. PROJECT CALCULATOR & CONSULTATION CTA
-    =========================================== -->
-    <section id="kontak" class="py-24 relative overflow-hidden">
+    <!-- PILAR SOLUSI -->
+    <section id="pilar" class="py-20 relative bg-slate-950/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="bg-gradient-to-b from-[#0B1021] to-[#070C1B] rounded-3xl border border-sky-500/20 p-8 sm:p-12 relative glow-effect">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    
-                    <!-- Left Column Text -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase">OUR CORE PHILOSOPHY</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1 mb-6">Mengapa Solusi URAI SOLUTIONS Berbeda?</h2>
                     <div class="space-y-6">
-                        <span class="text-xs font-mono text-sky-400 uppercase tracking-widest block">MULAI DISKUSI SISTEM</span>
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                            Siap Memodernisasi Operasional Bisnis Anda Hari Ini?
-                        </h2>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Beritahu kami kebutuhan khusus operasional Anda. Apakah itu pembuatan Fleet Monitoring, Sistem Konveksi/RAB, POS Kasir, atau Otomatisasi Workflow Cabang.
-                        </p>
-
-                        <div class="space-y-3 font-mono text-xs text-slate-300">
-                            <div class="flex items-center gap-3">
-                                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-                                <span>Respon Cepat via WhatsApp Direct</span>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-mono font-bold text-blue-400 shrink-0">01</div>
+                            <div>
+                                <h4 class="text-base font-bold text-white mb-1">Fokus Pada Masalah Nyata Lapangan</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">Sistem tidak dirancang sekadar keren secara visual, melainkan benar-benar memangkas jam kerja administrasi dan mencegah kebocoran biaya.</p>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                                <span>Gratis Sesi Analisis Kebutuhan Awal</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-mono font-bold text-blue-400 shrink-0">02</div>
+                            <div>
+                                <h4 class="text-base font-bold text-white mb-1">Performa Tinggi & Ringan</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">Arsitektur kode yang efisien membuat aplikasi dapat dibuka dengan cepat bahkan di koneksi internet minim atau perangkat berspesifikasi standar.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-mono font-bold text-blue-400 shrink-0">03</div>
+                            <div>
+                                <h4 class="text-base font-bold text-white mb-1">Tanpa Biaya Lisensi Mengikat</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">Model kepemilikan sistem fleksibel yang memberikan kontrol penuh atas data dan keberlanjutan aplikasi bisnis Anda.</p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Right Column: Interactive WA Message Builder Form -->
-                    <div class="bg-slate-950 p-6 sm:p-8 rounded-2xl border border-white/10 space-y-4">
-                        <h3 class="text-lg font-bold text-white mb-2">Formulir Kontak Singkat</h3>
-                        
+                <!-- Platform Education Integration -->
+                <div class="glass-panel p-8 rounded-2xl border-slate-800 relative">
+                    <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/30">KNOWLEDGE & CONTENT ECOSYSTEM</span>
+                    <h3 class="text-2xl font-bold text-white mt-3 mb-2">@korporatpedia</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">
+                        Platform edukasi profesional yang dikembangkan oleh URAI SOLUTIONS untuk membagikan wawasan produktivitas kerja, otomatisasi operasional, dan analisis metrik penjualan (sales metrics).
+                    </p>
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
+                        <div class="flex justify-between">
+                            <span>Focus Topic:</span>
+                            <span class="text-purple-300">Sales Metrics & Operations</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Target Audience:</span>
+                            <span class="text-purple-300">Corporate Professionals & Business Owners</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORM KONTAK & DISKUSI DIRECT WHATSAPP -->
+    <section id="contact" class="py-20 relative bg-slate-950/80">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 sm:p-10 rounded-3xl border-slate-800">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase">START A PROJECT</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Konsultasikan Kebutuhan Sistem Anda</h2>
+                    <p class="text-xs text-slate-400 mt-2">Kirim rincian singkat aplikasi yang ingin Abah bangun, pesan akan terhubung langsung ke WhatsApp URAI SOLUTIONS.</p>
+                </div>
+                
+                <form onsubmit="sendToWhatsApp(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-mono text-slate-400 mb-1">Nama Lengkap / Perusahaan</label>
-                            <input type="text" id="contactName" placeholder="Contoh: Budi Santoso (PT Borneo Logistik)" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-sky-500">
+                            <input type="text" id="senderName" required placeholder="Contoh: PT Borneo Logistics" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 font-sans">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-mono text-slate-400 mb-1">Kategori Solusi yang Dibutuhkan</label>
-                            <select id="contactCategory" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-sky-300 focus:outline-none focus:border-sky-500">
-                                <option value="Fleet BBM & Armada">Fleet BBM & Pemantauan Kendaraan Operasional</option>
-                                <option value="RAB Konveksi & Pembukuan">RAB Konveksi & Pembukuan Manufaktur</option>
-                                <option value="Sistem POS Kasir Hybrid">Sistem POS Kasir & Multi-Outlet Finance</option>
-                                <option value="Otomatisasi Workflow Cabang">Otomatisasi Workflow & Dashboard Audit Cabang</option>
-                                <option value="Custom Software Development">Sistem Custom Khusus Lainya</option>
+                            <label class="block text-xs font-mono text-slate-400 mb-1">Jenis Sistem Yang Dibutuhkan</label>
+                            <select id="systemType" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 font-sans">
+                                <option value="Fleet Monitoring BBM">Fleet & Fuel Monitoring System</option>
+                                <option value="Aplikasi Konveksi / RAB">RAB & Management Konveksi</option>
+                                <option value="Workflow Cabang & Fraud Control">Workflow Operational Cabang</option>
+                                <option value="Smart POS Retail">Sistem Kasir POS Multi-Outlet</option>
+                                <option value="Custom Software Development">Sistem Kustom Lainnya</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-mono text-slate-400 mb-1">Catatan Singkat Kebutuhan</label>
-                            <textarea id="contactNotes" rows="3" placeholder="Tuliskan kendala operasional yang ingin diselesaikan..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-sky-500"></textarea>
-                        </div>
-
-                        <button onclick="sendWhatsAppMessage()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-lg shadow-lg transition duration-300">
-                            Kirim Pesan via WhatsApp Direct →
-                        </button>
                     </div>
-
-                </div>
+                    <div>
+                        <label class="block text-xs font-mono text-slate-400 mb-1">Pesan / Catatan Kebutuhan</label>
+                        <textarea id="senderMessage" rows="4" required placeholder="Jelaskan secara singkat kendala operasional atau fitur aplikasi yang ingin dikembangkan..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 font-sans"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-sm transition-all shadow-lg shadow-blue-600/30">
+                        KIRIM PESAN VIA WHATSAPP →
+                    </button>
+                </form>
             </div>
-
         </div>
     </section>
 
-    <!-- ==========================================
-         8. FOOTER
-    =========================================== -->
-    <footer class="py-12 border-t border-white/10 bg-[#04060E] text-slate-400 text-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            
-            <div class="flex items-center gap-3">
-                <img src="LOGO URAI SOLUTIONS.jpeg" alt="URAI SOLUTIONS Logo" class="w-8 h-8 rounded-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/32/007AFF/FFFFFF?text=U';">
-                <div>
-                    <span class="font-extrabold text-white text-sm">URAI SOLUTIONS</span>
-                    <p class="text-[11px] text-slate-400">Enterprise Software & Operational Technology</p>
-                </div>
-            </div>
-
-            <div class="text-center md:text-right font-mono text-[11px] space-y-1">
-                <p>Pontianak, Kalimantan Barat, Indonesia</p>
-                <p class="text-slate-400">© 2026 URAI SOLUTIONS. All rights reserved.</p>
-            </div>
-
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-mono">
+            <p>© 2026 URAI SOLUTIONS. All rights reserved.</p>
+            <p>Pontianak, Kalimantan Barat — Indonesia</p>
         </div>
     </footer>
 
+    <!-- DEMO MODAL POPUP -->
+    <div id="demoModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel p-6 rounded-2xl max-w-md w-full border-slate-700 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 id="modalTitle" class="font-bold text-white text-base">Demo Aplikasi</h3>
+                <button onclick="closeDemoModal()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
+            </div>
+            <p id="modalDesc" class="text-xs text-slate-300 leading-relaxed"></p>
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-cyan-400">
+                ✓ System Architecture Prepared<br>
+                ✓ Database & Local/Cloud Storage Ready<br>
+                ✓ Live Client Deployment Capable
+            </div>
+            <button onclick="closeDemoModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase">
+                TUTUP PREVIEW
+            </button>
+        </div>
+    </div>
 
-    <!-- ==========================================
-         9. JAVASCRIPT LOGIC
-    =========================================== -->
+    <!-- JAVASCRIPT HANDLERS -->
     <script>
-        // --- 1. Hero Fuel Chart Initialization ---
-        let heroChart;
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('heroFuelChart').getContext('2d');
-            
-            heroChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['M1 Jan', 'M2 Jan', 'M3 Jan', 'M4 Jan', 'M1 Feb', 'M2 Feb'],
-                    datasets: [
-                        {
-                            label: 'Rasio KM/Liter Cabang Utama',
-                            data: [9.1, 9.4, 9.2, 9.8, 9.7, 9.85],
-                            borderColor: '#00D2FF',
-                            backgroundColor: 'rgba(0, 210, 255, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.35,
-                            pointBackgroundColor: '#00D2FF'
-                        },
-                        {
-                            label: 'Standard Minimum Benchmark',
-                            data: [9.0, 9.0, 9.0, 9.0, 9.0, 9.0],
-                            borderColor: '#F43F5E',
-                            borderWidth: 1.5,
-                            borderDash: [5, 5],
-                            pointRadius: 0,
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+        // Chart Initialization
+        const ctx = document.getElementById('fuelChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
+                datasets: [{
+                    label: 'Rasio KM/Liter Armada',
+                    data: [9.1, 9.4, 9.2, 9.85],
+                    borderColor: '#00D2FF',
+                    backgroundColor: 'rgba(0, 210, 255, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#007AFF',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
                     },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                            ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                            ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } },
-                            min: 7,
-                            max: 12
-                        }
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } },
+                        min: 7,
+                        max: 12
                     }
                 }
-            });
+            }
         });
 
-        // --- 2. Update Hero Dashboard when Branch Selected ---
-        function updateHeroDashboard() {
-            const val = document.getElementById('heroBranchFilter').value;
-            const kmlEl = document.getElementById('heroKmlVal');
-            const costEl = document.getElementById('heroFuelCostVal');
-            const alertEl = document.getElementById('heroAlertVal');
-
-            if (val === 'pnk') {
-                kmlEl.innerText = '10.2';
-                costEl.innerText = 'Rp 28.100.000';
-                alertEl.innerText = '0 Unit';
-                heroChart.data.datasets[0].data = [9.5, 9.8, 9.9, 10.1, 10.0, 10.2];
-            } else if (val === 'skw') {
-                kmlEl.innerText = '8.75';
-                costEl.innerText = 'Rp 14.750.000';
-                alertEl.innerText = '1 Unit';
-                heroChart.data.datasets[0].data = [8.2, 8.4, 8.1, 8.6, 8.5, 8.75];
-            } else {
-                kmlEl.innerText = '9.85';
-                costEl.innerText = 'Rp 42.850.000';
-                alertEl.innerText = '1 Unit';
-                heroChart.data.datasets[0].data = [9.1, 9.4, 9.2, 9.8, 9.7, 9.85];
-            }
-            heroChart.update();
+        // Demo Modal Handlers
+        function openDemoModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('demoModal').classList.remove('hidden');
         }
-
-        // --- 3. Portfolio Category Filter ---
-        function filterPortfolio(category) {
-            const items = document.querySelectorAll('.portfolio-item');
-            const buttons = document.querySelectorAll('.portfolio-tab-btn');
-
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-sky-500', 'text-slate-950', 'font-bold');
-                btn.classList.add('text-slate-400');
-            });
-
-            const activeBtn = document.getElementById(`btn-${category}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-sky-500', 'text-slate-950', 'font-bold');
-                activeBtn.classList.remove('text-slate-400');
-            }
-
-            items.forEach(item => {
-                if (category === 'all') {
-                    item.style.display = 'flex';
-                } else {
-                    if (item.classList.contains(category)) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-        // --- 4. Interactive Live Demo Simulator Modal ---
-        function openDemoModal(type) {
-            const modal = document.getElementById('demoModal');
-            const title = document.getElementById('modalTitle');
-            const category = document.getElementById('modalCategory');
-            const content = document.getElementById('modalContent');
-
-            modal.classList.remove('hidden');
-
-            if (type === 'fleet') {
-                category.innerText = 'SIMULATOR MODEL — FLEET BBM';
-                title.innerText = 'Fleet Fuel & Odometer Monitoring System';
-                content.innerHTML = `
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Coba masukkan angka Odometer awal, Odometer akhir, dan jumlah liter BBM untuk menguji deteksi otomatis rasio KM/L:
-                    </p>
-                    <div class="grid grid-cols-3 gap-3 text-xs font-mono">
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">KM Odometer Awal</label>
-                            <input type="number" id="simKmAwal" value="50000" oninput="calcFleetSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">KM Odometer Isi BBM</label>
-                            <input type="number" id="simKmAkhir" value="50450" oninput="calcFleetSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Total BBM (Liter)</label>
-                            <input type="number" id="simLiter" value="45" oninput="calcFleetSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                    </div>
-                    <div id="simFleetResult" class="p-3 bg-slate-900 rounded border border-emerald-500/30 text-xs font-mono text-center">
-                        Rasio Efisiensi BBM: <span class="text-emerald-400 font-bold text-sm">10.0 KM / Liter</span> (Normal)
-                    </div>
-                `;
-            } else if (type === 'renzani') {
-                category.innerText = 'SIMULATOR MODEL — APPAREL & RAB';
-                title.innerText = 'Renzani.co — Calculator RAB Konveksi';
-                content.innerHTML = `
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Simulasi kalkulasi RAB produksi kemeja per pcs (Biaya Potong + Jahit + Press + Bahan Baku):
-                    </p>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Bahan Baku (Rp)</label>
-                            <input type="number" id="simRabBahan" value="35000" oninput="calcRabSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Ongkos Jahit (Rp)</label>
-                            <input type="number" id="simRabJahit" value="15000" oninput="calcRabSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Potong & Press (Rp)</label>
-                            <input type="number" id="simRabPress" value="5000" oninput="calcRabSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-slate-400 block mb-1">Target Profit (%)</label>
-                            <input type="number" id="simRabMargin" value="30" oninput="calcRabSim()" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
-                        </div>
-                    </div>
-                    <div id="simRabResult" class="p-3 bg-slate-900 rounded border border-sky-500/30 text-xs font-mono text-center space-y-1">
-                        <div>Total HPP Modal: <span class="text-white font-bold">Rp 55.000 / pcs</span></div>
-                        <div class="text-emerald-400 font-bold">Rekomendasi Harga Jual: Rp 71.500 / pcs</div>
-                    </div>
-                `;
-            } else {
-                category.innerText = 'SIMULATOR MODEL — SYSTEM DEMO';
-                title.innerText = 'Custom Operational System';
-                content.innerHTML = `
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Seluruh sistem URAI SOLUTIONS dibangun sesuai spesifikasi unik workflow perusahaan Anda.
-                    </p>
-                    <div class="p-4 bg-slate-900 rounded border border-white/10 text-xs font-mono text-sky-300">
-                        ✓ 100% Sesuai Standar Operasional Prosedur (SOP)<br>
-                        ✓ Terintegrasi dengan Thermal Printer, Scanner, & WhatsApp Notification<br>
-                        ✓ Opsi Beli Putus Tanpa Biaya Sewa Bulanan
-                    </div>
-                `;
-            }
-        }
-
         function closeDemoModal() {
             document.getElementById('demoModal').classList.add('hidden');
         }
 
-        // Fleet Sim Calculator
-        function calcFleetSim() {
-            const awal = parseFloat(document.getElementById('simKmAwal').value) || 0;
-            const akhir = parseFloat(document.getElementById('simKmAkhir').value) || 0;
-            const liter = parseFloat(document.getElementById('simLiter').value) || 1;
-            const res = document.getElementById('simFleetResult');
-
-            const km = akhir - awal;
-            if (km <= 0 || liter <= 0) {
-                res.innerHTML = `<span class="text-rose-400">Input Angka Tidak Valid (KM Akhir Harus > KM Awal)</span>`;
-                return;
-            }
-
-            const ratio = (km / liter).toFixed(2);
-            let status = `<span class="text-emerald-400 font-bold text-sm">${ratio} KM / Liter</span> (Normal)`;
-            let borderClass = "border-emerald-500/30";
-
-            if (ratio < 6.0) {
-                status = `<span class="text-rose-400 font-bold text-sm">${ratio} KM / Liter</span> (! Pemborosan BBM Terdeteksi)`;
-                borderClass = "border-rose-500/40";
-            }
-
-            res.className = `p-3 bg-slate-900 rounded border ${borderClass} text-xs font-mono text-center`;
-            res.innerHTML = `Rasio Efisiensi BBM: ${status}`;
-        }
-
-        // RAB Sim Calculator
-        function calcRabSim() {
-            const bahan = parseFloat(document.getElementById('simRabBahan').value) || 0;
-            const jahit = parseFloat(document.getElementById('simRabJahit').value) || 0;
-            const press = parseFloat(document.getElementById('simRabPress').value) || 0;
-            const margin = parseFloat(document.getElementById('simRabMargin').value) || 0;
-            const res = document.getElementById('simRabResult');
-
-            const hpp = bahan + jahit + press;
-            const jual = hpp + (hpp * (margin / 100));
-
-            res.innerHTML = `
-                <div>Total HPP Modal: <span class="text-white font-bold">Rp ${hpp.toLocaleString('id-ID')} / pcs</span></div>
-                <div class="text-emerald-400 font-bold">Rekomendasi Harga Jual: Rp ${Math.round(jual).toLocaleString('id-ID')} / pcs</div>
-            `;
-        }
-
-        // --- 5. WhatsApp Direct Contact Message Generator ---
-        function sendWhatsAppMessage() {
-            const name = document.getElementById('contactName').value || 'Calon Klien URAI SOLUTIONS';
-            const category = document.getElementById('contactCategory').value;
-            const notes = document.getElementById('contactNotes').value || 'Saya berminat untuk diskusi kebutuhan aplikasi.';
-
-            const waNum = '62822541257596';
-            const text = `Halo Abah (URAI SOLUTIONS),\n\nSaya *${name}* berminat mendiskusikan sistem/aplikasi:\n*${category}*\n\n*Catatan Kebutuhan:*\n${notes}\n\nMohon informasi ketersediaan waktu untuk sesi diskusi/konsultasi. Terima kasih!`;
-
-            const url = `https://wa.me/${waNum}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+        // WhatsApp Form Handler
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('senderName').value;
+            const type = document.getElementById('systemType').value;
+            const msg = document.getElementById('senderMessage').value;
+            
+            const text = `Halo URAI SOLUTIONS,%0ANama: ${encodeURIComponent(name)}%0AKebutuhan Sistem: ${encodeURIComponent(type)}%0APesan: ${encodeURIComponent(msg)}`;
+            window.open(`https://wa.me/6282254127596?text=${text}`, '_blank');
         }
     </script>
 </body>
