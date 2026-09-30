@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URAI SOLUTION — Digital Solutions Specialist</title>
     
+    <!-- OPEN GRAPH META TAGS FOR WHATSAPP LINK PREVIEW -->
+    <meta property="og:title" content="URAI SOLUTION — Digital Solutions Specialist">
+    <meta property="og:description" content="Mengurai Kompleksitas, Menghadirkan Solusi. Dari Ide, Menjadi Solusi Digital — Website, Web Application, Business Automation, & Data Solutions.">
+    <meta property="og:image" content="./logo.jpeg.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- FAVICON LOGO -->
     <link rel="icon" type="image/png" href="./logo.jpeg.png">
     <link rel="shortcut icon" type="image/png" href="./logo.jpeg.png">
@@ -54,7 +61,7 @@
         }
         .nav-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         
-        /* BRAND LOGO WITH GLOW / EMBOSS EFFECT & WHITE CROP */
+        /* BRAND LOGO WITH GLOW & CROP */
         .brand { display: flex; align-items: center; gap: 14px; }
         .brand-logo-box {
             width: 46px; height: 46px;
@@ -63,7 +70,6 @@
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
             border: 1px solid rgba(56, 189, 248, 0.4);
-            /* EMBOS CAHAYA / PENDARAN NEON BIRU */
             box-shadow: 0 0 12px rgba(30, 104, 246, 0.6), 0 0 20px rgba(56, 189, 248, 0.3);
             transition: all 0.3s ease;
         }
@@ -75,7 +81,6 @@
             width: 100%; height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            /* ZOOM TIPIS UNTUK MEMOTONG HABIS TEPINYA YANG PUTIH */
             transform: scale(1.12);
         }
 
@@ -105,13 +110,33 @@
         .btn-outline:hover { background: var(--bg-card); border-color: var(--text-muted); }
 
         /* HERO SECTION */
-        .hero { padding-top: 160px; padding-bottom: 100px; border-bottom: 1px solid var(--border); }
+        .hero { padding-top: 160px; padding-bottom: 80px; border-bottom: 1px solid var(--border); }
         .hero-tag {
             display: inline-block; padding: 4px 14px; border-radius: 6px; background: rgba(30, 104, 246, 0.12);
             border: 1px solid rgba(30, 104, 246, 0.3); font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--accent-sky); margin-bottom: 20px; font-weight: 700;
         }
         .hero-title { font-size: 48px; font-weight: 800; line-height: 1.15; color: #FFF; margin-bottom: 20px; max-width: 880px; letter-spacing: -1px; }
         .hero-desc { font-size: 18px; color: var(--text-muted); max-width: 760px; margin-bottom: 32px; font-weight: 400; line-height: 1.7; }
+
+        /* TECH STACK MARQUEE */
+        .marquee-container {
+            width: 100%; overflow: hidden; background: rgba(13, 20, 36, 0.6);
+            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            padding: 14px 0; display: flex; align-items: center; white-space: nowrap;
+        }
+        .marquee-content {
+            display: flex; gap: 40px; animation: marquee 25s linear infinite; align-items: center;
+        }
+        .marquee-item {
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+            color: var(--text-muted); letter-spacing: 1px; display: flex; align-items: center; gap: 10px;
+        }
+        .marquee-dot { width: 6px; height: 6px; background: var(--accent-sky); border-radius: 50%; opacity: 0.6; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
         /* SECTION HEADERS */
         .section { padding: 90px 0; border-bottom: 1px solid var(--border); }
@@ -124,31 +149,40 @@
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
-        /* SERVICE CARDS */
-        .service-card {
+        /* SERVICE CARDS WITH GLOW TRACKING */
+        .glow-card {
             background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px;
-            transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s, opacity 0.4s; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-        .service-card:hover { border-color: var(--border-accent); background: var(--bg-card-hover); }
+        .glow-card::before {
+            content: ''; position: absolute; top: var(--mouse-y, -100px); left: var(--mouse-x, -100px);
+            width: 250px; height: 250px; background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+            transform: translate(-50%, -50%); pointer-events: none; transition: opacity 0.3s; opacity: 0;
+        }
+        .glow-card:hover::before { opacity: 1; }
+        .glow-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
+
         .service-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-sky); margin-bottom: 16px; font-weight: 700; }
         .service-title { font-size: 18px; font-weight: 700; color: #FFF; margin-bottom: 8px; }
         .service-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
-        /* CATEGORY PORTFOLIO SECTION */
-        .cat-block { margin-bottom: 50px; }
-        .cat-header {
-            display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
-            padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        /* PORTFOLIO FILTER TABS */
+        .filter-wrapper { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); color: var(--text-muted);
+            padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+            cursor: pointer; transition: all 0.2s;
         }
-        .cat-title { font-size: 18px; font-weight: 700; color: #FFF; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.3px; }
-        .cat-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--text-muted); }
+        .filter-btn:hover { background: rgba(255, 255, 255, 0.08); color: #FFF; }
+        .filter-btn.active { background: var(--accent-blue); color: #FFF; border-color: var(--accent-blue); }
 
         /* PORTFOLIO ITEM CARD */
         .port-card {
             background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px;
-            display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s;
+            display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;
         }
-        .port-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .port-card.hidden { display: none !important; }
         .port-tag { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #9CA3AF; margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
         .port-title { font-size: 17px; font-weight: 700; color: #FFF; margin-bottom: 8px; }
         .port-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
@@ -158,6 +192,10 @@
             width: 100%; text-align: center; transition: all 0.2s;
         }
         .port-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.2); }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* WORKFLOW SECTION */
         .step-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
@@ -227,7 +265,7 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section class="hero container">
+    <section class="hero container reveal">
         <span class="hero-tag">YOUR DIGITAL GROWTH PARTNER</span>
         <h1 class="hero-title">
             Mengurai Kompleksitas, Menghadirkan Solusi.
@@ -245,8 +283,35 @@
         </div>
     </section>
 
+    <!-- TECH STACK MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span class="marquee-item"><span class="marquee-dot"></span>PYTHON</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>REACT.JS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>NODE.JS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>MYSQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>POSTGRESQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>TAILWIND CSS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>REST API</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>DOCKER</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>PANDAS / DATA</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>EXCEL AUTOMATION</span>
+            <!-- DUPLICATE FOR INFINITE LOOP -->
+            <span class="marquee-item"><span class="marquee-dot"></span>PYTHON</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>REACT.JS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>NODE.JS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>MYSQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>POSTGRESQL</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>TAILWIND CSS</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>REST API</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>DOCKER</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>PANDAS / DATA</span>
+            <span class="marquee-item"><span class="marquee-dot"></span>EXCEL AUTOMATION</span>
+        </div>
+    </div>
+
     <!-- CORE SERVICES -->
-    <section id="services" class="section container">
+    <section id="services" class="section container reveal">
         <div class="section-header" style="margin-bottom: 40px;">
             <span class="section-tag">SERVICES & CAPABILITIES</span>
             <h2 class="section-title">Layanan Spesialis Digital</h2>
@@ -254,28 +319,28 @@
         </div>
 
         <div class="grid-4">
-            <div class="service-card">
+            <div class="glow-card">
                 <div>
                     <div class="service-num">01 / PILLAR</div>
                     <h3 class="service-title">Website Development</h3>
                     <p class="service-desc">Pengembangan website korporat profesional, landing page bisnis, dan portal informasi dengan akses ultra cepat serta responsif.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="glow-card">
                 <div>
                     <div class="service-num">02 / PILLAR</div>
                     <h3 class="service-title">Web Application</h3>
                     <p class="service-desc">Rancang bangun aplikasi web kustom untuk manajemen operasional, sistem HRIS/Payroll, armada, dan alur kerja internal.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="glow-card">
                 <div>
                     <div class="service-num">03 / PILLAR</div>
                     <h3 class="service-title">Business Automation</h3>
                     <p class="service-desc">Otomatisasi alur kerja administrasi, approval berjenjang, dan pemangkasan jam kerja manual untuk efisiensi bisnis.</p>
                 </div>
             </div>
-            <div class="service-card">
+            <div class="glow-card">
                 <div>
                     <div class="service-num">04 / PILLAR</div>
                     <h3 class="service-title">Data Solutions</h3>
@@ -285,179 +350,159 @@
         </div>
     </section>
 
-    <!-- PORTFOLIO GROUPED BY CATEGORY -->
-    <section id="portfolio" class="section container">
-        <div class="section-header" style="margin-bottom: 50px;">
+    <!-- PORTFOLIO GROUPED BY CATEGORY WITH FILTER -->
+    <section id="portfolio" class="section container reveal">
+        <div class="section-header" style="margin-bottom: 30px;">
             <span class="section-tag">CASE STUDIES & PORTFOLIO</span>
             <h2 class="section-title">Proyek Yang Telah Selesai Dikerjakan</h2>
             <p class="section-desc">Daftar portofolio sistem yang dirancang khusus sesuai dengan kebutuhan unik dari masing-masing klien kami.</p>
         </div>
 
-        <!-- KATEGORI 1: OPERASIONAL & LOGISTIK -->
-        <div class="cat-block">
-            <div class="cat-header">
-                <h3 class="cat-title">Sistem Operasional & Logistik Armada</h3>
-                <span class="cat-badge">4 Proyek</span>
-            </div>
-            <div class="grid-3">
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Logistik & Fleet Management</div>
-                        <h4 class="port-title">FleetOps 360 & Pemantau BBM</h4>
-                        <p class="port-desc">Sistem pengawasan efisiensi bahan bakar, rasio KM/Liter, log odometer driver, dan alert pemborosan armada.</p>
-                    </div>
-                    <button onclick="openModal('FleetOps 360 & BBM', 'Sistem pelacak BBM dan Odometer real-time armada.', ['Validasi Foto Struk & Odometer', 'Deteksi Anomali Pemborosan BBM', 'Analisis Rasio KM/L Per Driver'])" class="port-btn">Rincian Modul →</button>
-                </div>
-
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Operational Audit</div>
-                        <h4 class="port-title">Pemantauan Biaya PT. ACK</h4>
-                        <p class="port-desc">Sistem pengawasan pengeluaran biaya operasional cabang/proyek untuk verifikasi klaim bertingkat dan audit.</p>
-                    </div>
-                    <button onclick="openModal('Pemantauan Biaya PT. ACK', 'Sistem kontrol pengeluaran biaya operasional.', ['Verifikasi Dokumen Klaim Bertingkat', 'Pencegahan Fraud Biaya Operasional', 'Audit Trail & Rekapitulasi Finansial'])" class="port-btn">Rincian Modul →</button>
-                </div>
-
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Fleet Monitoring</div>
-                        <h4 class="port-title">Pemantau BBM Kendaraan Operasional</h4>
-                        <p class="port-desc">Pencatatan riwayat pengisian BBM per kendaraan operasional, pencocokan odometer, dan analisis efisiensi jarak.</p>
-                    </div>
-                    <button onclick="openModal('Pemantau BBM Kendaraan', 'Pencatatan & analisis BBM kendaraan operasional.', ['Riwayat Pengisian BBM & Biaya', 'Kalkulasi Otomatis Jarak Tempuh', 'Laporan Bulanan Per Kendaraan'])" class="port-btn">Rincian Modul →</button>
-                </div>
-
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Enterprise Workflow</div>
-                        <h4 class="port-title">Web Operasional & Workflow Cabang</h4>
-                        <p class="port-desc">Otomatisasi alur kerja administrasi operasional internal cabang, pengarsipan digital, dan verifikasi dokumen.</p>
-                    </div>
-                    <button onclick="openModal('Web Workflow Cabang', 'Otomatisasi alur kerja operasional cabang.', ['Verifikasi Dokumen Cabang Digital', 'Digital Archiving & Workflow History', 'Standardisasi Alur Kerja Admin'])" class="port-btn">Rincian Modul →</button>
-                </div>
-            </div>
+        <!-- FILTER BUTTONS -->
+        <div class="filter-wrapper">
+            <button class="filter-btn active" onclick="filterPort('all', this)">Semua (14)</button>
+            <button class="filter-btn" onclick="filterPort('fleet', this)">Logistik Armada (4)</button>
+            <button class="filter-btn" onclick="filterPort('hris', this)">HRIS & Payroll (2)</button>
+            <button class="filter-btn" onclick="filterPort('pos', this)">Keuangan & POS (4)</button>
+            <button class="filter-btn" onclick="filterPort('data', this)">Otomatisasi & Data (4)</button>
         </div>
 
-        <!-- KATEGORI 2: HR, ABSENSI & PAYROLL -->
-        <div class="cat-block">
-            <div class="cat-header">
-                <h3 class="cat-title">HRIS, Absensi GPS & Penggajian</h3>
-                <span class="cat-badge">2 Proyek</span>
+        <!-- ALL PORTFOLIO ITEMS -->
+        <div class="grid-3" id="portGrid">
+            <!-- LOGISTIK & ARMADA -->
+            <div class="glow-card port-card" data-cat="fleet">
+                <div>
+                    <div class="port-tag">Logistik & Fleet Management</div>
+                    <h4 class="port-title">FleetOps 360 & Pemantau BBM</h4>
+                    <p class="port-desc">Sistem pengawasan efisiensi bahan bakar, rasio KM/Liter, log odometer driver, dan alert pemborosan armada.</p>
+                </div>
+                <button onclick="openModal('FleetOps 360 & BBM', 'Sistem pelacak BBM dan Odometer real-time armada.', ['Validasi Foto Struk & Odometer', 'Deteksi Anomali Pemborosan BBM', 'Analisis Rasio KM/L Per Driver'])" class="port-btn">Rincian Modul →</button>
             </div>
-            <div class="grid-3">
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Mobile Web App</div>
-                        <h4 class="port-title">Absensi Online GPS & Selfie</h4>
-                        <p class="port-desc">Aplikasi absensi karyawan dengan verifikasi lokasi GPS geofencing, foto live selfie, dan rekap laporan bulanan.</p>
-                    </div>
-                    <button onclick="openModal('Absensi Online GPS & Selfie', 'Sistem absensi seluler presisi tinggi.', ['Validasi Geofencing GPS Radius', 'Kamera Live Selfie Anti-cheat', 'Export Rekap Absensi Bulanan'])" class="port-btn">Rincian Modul →</button>
-                </div>
 
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Enterprise HR</div>
-                        <h4 class="port-title">Aplikasi HRIS & Payroll System</h4>
-                        <p class="port-desc">Pengelolaan data induk karyawan, struktur gaji, komponen tunjangan, potongan absen, dan slip gaji digital.</p>
-                    </div>
-                    <button onclick="openModal('Aplikasi HRIS & Payroll', 'Sistem manajemen SDM & penggajian perusahaan.', ['Database Induk Karyawan & Dokumen', 'Kalkulasi Gaji Pokok & Tunjangan', 'Cetak Slip Gaji Digital'])" class="port-btn">Rincian Modul →</button>
+            <div class="glow-card port-card" data-cat="fleet">
+                <div>
+                    <div class="port-tag">Operational Audit</div>
+                    <h4 class="port-title">Pemantauan Biaya PT. ACK</h4>
+                    <p class="port-desc">Sistem pengawasan pengeluaran biaya operasional cabang/proyek untuk verifikasi klaim bertingkat dan audit.</p>
                 </div>
+                <button onclick="openModal('Pemantauan Biaya PT. ACK', 'Sistem kontrol pengeluaran biaya operasional.', ['Verifikasi Dokumen Klaim Bertingkat', 'Pencegahan Fraud Biaya Operasional', 'Audit Trail & Rekapitulasi Finansial'])" class="port-btn">Rincian Modul →</button>
             </div>
-        </div>
 
-        <!-- KATEGORI 3: KEUANGAN, MANUFAKTUR & POS -->
-        <div class="cat-block">
-            <div class="cat-header">
-                <h3 class="cat-title">Keuangan, POS & Manufaktur</h3>
-                <span class="cat-badge">4 Proyek</span>
+            <div class="glow-card port-card" data-cat="fleet">
+                <div>
+                    <div class="port-tag">Fleet Monitoring</div>
+                    <h4 class="port-title">Pemantau BBM Kendaraan Operasional</h4>
+                    <p class="port-desc">Pencatatan riwayat pengisian BBM per kendaraan operasional, pencocokan odometer, dan analisis efisiensi jarak.</p>
+                </div>
+                <button onclick="openModal('Pemantau BBM Kendaraan', 'Pencatatan & analisis BBM kendaraan operasional.', ['Riwayat Pengisian BBM & Biaya', 'Kalkulasi Otomatis Jarak Tempuh', 'Laporan Bulanan Per Kendaraan'])" class="port-btn">Rincian Modul →</button>
             </div>
-            <div class="grid-3">
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Manufaktur & Garmen</div>
-                        <h4 class="port-title">Aplikasi Konveksi Renzani.co</h4>
-                        <p class="port-desc">Pembukuan konveksi, kalkulasi RAB produksi garmen terperinci, cetak struk thermal 58mm, dan laporan cashflow.</p>
-                    </div>
-                    <button onclick="openModal('Aplikasi Konveksi Renzani.co', 'Solusi pembukuan dan RAB produksi garmen.', ['Perhitungan RAB Komponen Jahit & Potong', 'Pencatatan Order & Transaksi', 'Cetak Struk Thermal 58mm'])" class="port-btn">Rincian Modul →</button>
-                </div>
 
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Inventaris Gudang</div>
-                        <h4 class="port-title">Kartu Stok Gudang & Opname</h4>
-                        <p class="port-desc">Pencatatan mutasi barang masuk/keluar, penyesuaian stok opname, serta peringatan otomatis batas minimum stok.</p>
-                    </div>
-                    <button onclick="openModal('Kartu Stok Gudang', 'Manajemen mutasi stok gudang presisi.', ['Pencatatan Barang Masuk & Keluar', 'Alert Batas Stok Minimum', 'Kartu Stok Digital & History Opname'])" class="port-btn">Rincian Modul →</button>
+            <div class="glow-card port-card" data-cat="fleet">
+                <div>
+                    <div class="port-tag">Enterprise Workflow</div>
+                    <h4 class="port-title">Web Operasional & Workflow Cabang</h4>
+                    <p class="port-desc">Otomatisasi alur kerja administrasi operasional internal cabang, pengarsipan digital, dan verifikasi dokumen.</p>
                 </div>
-
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Sales Pipeline</div>
-                        <h4 class="port-title">CRM & Management Pipeline</h4>
-                        <p class="port-desc">Manajemen data calon klien (leads), riwayat interaksi sales, pelacakan pipa penjualan, dan analisis konversi.</p>
-                    </div>
-                    <button onclick="openModal('CRM & Sales Pipeline', 'Pengelolaan hubungan pelanggan & sales pipeline.', ['Database Klien & History Contact', 'Tracking Pipeline Prospek Sales', 'Dashboard Konversi Omzet'])" class="port-btn">Rincian Modul →</button>
-                </div>
-
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Retail & Services</div>
-                        <h4 class="port-title">POS Laundry & Keuangan Kasir</h4>
-                        <p class="port-desc">Sistem kasir POS laundry kiloan/satuan, pelacakan status cuci, notifikasi WhatsApp ke pelanggan, dan laba rugi.</p>
-                    </div>
-                    <button onclick="openModal('Aplikasi Laundry & POS', 'Sistem POS & operasional usaha laundry.', ['Pencatatan Nota Kiloan & Satuan', 'Tracking Status Cuci / Selesai', 'Notifikasi Kirim Nota WA'])" class="port-btn">Rincian Modul →</button>
-                </div>
+                <button onclick="openModal('Web Workflow Cabang', 'Otomatisasi alur kerja operasional cabang.', ['Verifikasi Dokumen Cabang Digital', 'Digital Archiving & Workflow History', 'Standardisasi Alur Kerja Admin'])" class="port-btn">Rincian Modul →</button>
             </div>
-        </div>
 
-        <!-- KATEGORI 4: OTOMATISASI DATA & PORTAL KHUSUS -->
-        <div class="cat-block" style="margin-bottom: 0;">
-            <div class="cat-header">
-                <h3 class="cat-title">Otomatisasi Data & Portal Khusus</h3>
-                <span class="cat-badge">4 Proyek</span>
+            <!-- HRIS & PAYROLL -->
+            <div class="glow-card port-card" data-cat="hris">
+                <div>
+                    <div class="port-tag">Mobile Web App</div>
+                    <h4 class="port-title">Absensi Online GPS & Selfie</h4>
+                    <p class="port-desc">Aplikasi absensi karyawan dengan verifikasi lokasi GPS geofencing, foto live selfie, dan rekap laporan bulanan.</p>
+                </div>
+                <button onclick="openModal('Absensi Online GPS & Selfie', 'Sistem absensi seluler presisi tinggi.', ['Validasi Geofencing GPS Radius', 'Kamera Live Selfie Anti-cheat', 'Export Rekap Absensi Bulanan'])" class="port-btn">Rincian Modul →</button>
             </div>
-            <div class="grid-3">
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Data Automation</div>
-                        <h4 class="port-title">Script Ekspor Data Xhistoris → Excel</h4>
-                        <p class="port-desc">Skrip otomatisasi penarikan data mentah dari sistem, pembersihan data, dan penyusunan format Excel otomatis.</p>
-                    </div>
-                    <button onclick="openModal('Script Ekspor Xhistoris', 'Otomatisasi pengolahan & konversi data.', ['Ekstraksi Data Otomatis', 'Format Ulang Kolom & Pembersihan Data', 'Export Direct File Excel (.xlsx)'])" class="port-btn">Rincian Modul →</button>
-                </div>
 
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Sosial & Komunitas</div>
-                        <h4 class="port-title">Aplikasi Dana Duka Paguyuban</h4>
-                        <p class="port-desc">Sistem pengelolaan iuran kas bulanan, pencatatan keanggotaan paguyuban, serta distribusi santunan duka.</p>
-                    </div>
-                    <button onclick="openModal('Aplikasi Dana Duka', 'Sistem iuran & bantuan sosial komunitas.', ['Database Anggota Paguyuban', 'Pencatatan Iuran Bulanan Rutin', 'Pengajuan & Verifikasi Klaim'])" class="port-btn">Rincian Modul →</button>
+            <div class="glow-card port-card" data-cat="hris">
+                <div>
+                    <div class="port-tag">Enterprise HR</div>
+                    <h4 class="port-title">Aplikasi HRIS & Payroll System</h4>
+                    <p class="port-desc">Pengelolaan data induk karyawan, struktur gaji, komponen tunjangan, potongan absen, dan slip gaji digital.</p>
                 </div>
+                <button onclick="openModal('Aplikasi HRIS & Payroll', 'Sistem manajemen SDM & penggajian perusahaan.', ['Database Induk Karyawan & Dokumen', 'Kalkulasi Gaji Pokok & Tunjangan', 'Cetak Slip Gaji Digital'])" class="port-btn">Rincian Modul →</button>
+            </div>
 
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Akademik & Sekolah</div>
-                        <h4 class="port-title">Lembar Induk Siswa Digital</h4>
-                        <p class="port-desc">Penyimpanan basis data akademis siswa, rekam jejak nilai, mutasi kelas, serta pencetakan buku induk digital.</p>
-                    </div>
-                    <button onclick="openModal('Lembar Induk Siswa', 'Database akademik & buku induk sekolah.', ['Profil Lengkap Siswa & Wali', 'Riwayat Akademik & Prestasi', 'Cetak Lembar Induk DIKNAS'])" class="port-btn">Rincian Modul →</button>
+            <!-- KEUANGAN & POS -->
+            <div class="glow-card port-card" data-cat="pos">
+                <div>
+                    <div class="port-tag">Manufaktur & Garmen</div>
+                    <h4 class="port-title">Aplikasi Konveksi Renzani.co</h4>
+                    <p class="port-desc">Pembukuan konveksi, kalkulasi RAB produksi garmen terperinci, cetak struk thermal 58mm, dan laporan cashflow.</p>
                 </div>
+                <button onclick="openModal('Aplikasi Konveksi Renzani.co', 'Solusi pembukuan dan RAB produksi garmen.', ['Perhitungan RAB Komponen Jahit & Potong', 'Pencatatan Order & Transaksi', 'Cetak Struk Thermal 58mm'])" class="port-btn">Rincian Modul →</button>
+            </div>
 
-                <div class="port-card">
-                    <div>
-                        <div class="port-tag">Corporate Website</div>
-                        <h4 class="port-title">Website Company Profile</h4>
-                        <p class="port-desc">Landing page bisnis profesional, responsif, cepat diakses, dan terintegrasi langsung dengan saluran komunikasi WhatsApp.</p>
-                    </div>
-                    <button onclick="openModal('Website Portofolio Corporate', 'Landing page bisnis profesional & cepat.', ['Desain Minimalis Modern B2B', 'Optimalisasi Kecepatan Akses', 'Integrasi Form Direct WhatsApp'])" class="port-btn">Rincian Modul →</button>
+            <div class="glow-card port-card" data-cat="pos">
+                <div>
+                    <div class="port-tag">Inventaris Gudang</div>
+                    <h4 class="port-title">Kartu Stok Gudang & Opname</h4>
+                    <p class="port-desc">Pencatatan mutasi barang masuk/keluar, penyesuaian stok opname, serta peringatan otomatis batas minimum stok.</p>
                 </div>
+                <button onclick="openModal('Kartu Stok Gudang', 'Manajemen mutasi stok gudang presisi.', ['Pencatatan Barang Masuk & Keluar', 'Alert Batas Stok Minimum', 'Kartu Stok Digital & History Opname'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <div class="glow-card port-card" data-cat="pos">
+                <div>
+                    <div class="port-tag">Sales Pipeline</div>
+                    <h4 class="port-title">CRM & Management Pipeline</h4>
+                    <p class="port-desc">Manajemen data calon klien (leads), riwayat interaksi sales, pelacakan pipa penjualan, dan analisis konversi.</p>
+                </div>
+                <button onclick="openModal('CRM & Sales Pipeline', 'Pengelolaan hubungan pelanggan & sales pipeline.', ['Database Klien & History Contact', 'Tracking Pipeline Prospek Sales', 'Dashboard Konversi Omzet'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <div class="glow-card port-card" data-cat="pos">
+                <div>
+                    <div class="port-tag">Retail & Services</div>
+                    <h4 class="port-title">POS Laundry & Keuangan Kasir</h4>
+                    <p class="port-desc">Sistem kasir POS laundry kiloan/satuan, pelacakan status cuci, notifikasi WhatsApp ke pelanggan, dan laba rugi.</p>
+                </div>
+                <button onclick="openModal('Aplikasi Laundry & POS', 'Sistem POS & operasional usaha laundry.', ['Pencatatan Nota Kiloan & Satuan', 'Tracking Status Cuci / Selesai', 'Notifikasi Kirim Nota WA'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <!-- OTOMATISASI & DATA -->
+            <div class="glow-card port-card" data-cat="data">
+                <div>
+                    <div class="port-tag">Data Automation</div>
+                    <h4 class="port-title">Script Ekspor Data Xhistoris → Excel</h4>
+                    <p class="port-desc">Skrip otomatisasi penarikan data mentah dari sistem, pembersihan data, dan penyusunan format Excel otomatis.</p>
+                </div>
+                <button onclick="openModal('Script Ekspor Xhistoris', 'Otomatisasi pengolahan & konversi data.', ['Ekstraksi Data Otomatis', 'Format Ulang Kolom & Pembersihan Data', 'Export Direct File Excel (.xlsx)'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <div class="glow-card port-card" data-cat="data">
+                <div>
+                    <div class="port-tag">Sosial & Komunitas</div>
+                    <h4 class="port-title">Aplikasi Dana Duka Paguyuban</h4>
+                    <p class="port-desc">Sistem pengelolaan iuran kas bulanan, pencatatan keanggotaan paguyuban, serta distribusi santunan duka.</p>
+                </div>
+                <button onclick="openModal('Aplikasi Dana Duka', 'Sistem iuran & bantuan sosial komunitas.', ['Database Anggota Paguyuban', 'Pencatatan Iuran Bulanan Rutin', 'Pengajuan & Verifikasi Klaim'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <div class="glow-card port-card" data-cat="data">
+                <div>
+                    <div class="port-tag">Akademik & Sekolah</div>
+                    <h4 class="port-title">Lembar Induk Siswa Digital</h4>
+                    <p class="port-desc">Penyimpanan basis data akademis siswa, rekam jejak nilai, mutasi kelas, serta pencetakan buku induk digital.</p>
+                </div>
+                <button onclick="openModal('Lembar Induk Siswa', 'Database akademik & buku induk sekolah.', ['Profil Lengkap Siswa & Wali', 'Riwayat Akademik & Prestasi', 'Cetak Lembar Induk DIKNAS'])" class="port-btn">Rincian Modul →</button>
+            </div>
+
+            <div class="glow-card port-card" data-cat="data">
+                <div>
+                    <div class="port-tag">Corporate Website</div>
+                    <h4 class="port-title">Website Company Profile</h4>
+                    <p class="port-desc">Landing page bisnis profesional, responsif, cepat diakses, dan terintegrasi langsung dengan saluran komunikasi WhatsApp.</p>
+                </div>
+                <button onclick="openModal('Website Portofolio Corporate', 'Landing page bisnis profesional & cepat.', ['Desain Minimalis Modern B2B', 'Optimalisasi Kecepatan Akses', 'Integrasi Form Direct WhatsApp'])" class="port-btn">Rincian Modul →</button>
             </div>
         </div>
     </section>
 
     <!-- WORKFLOW METODOLOGI KERJA -->
-    <section id="workflow" class="section container">
+    <section id="workflow" class="section container reveal">
         <div class="section-header" style="margin-bottom: 40px;">
             <span class="section-tag">DEVELOPMENT PROCESS</span>
             <h2 class="section-title">Metodologi Kerja</h2>
@@ -465,31 +510,39 @@
         </div>
 
         <div class="grid-4">
-            <div class="step-card">
-                <div class="step-num">01</div>
-                <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Audit & Diskusi Alur</h4>
-                <p style="font-size: 13px; color: var(--text-muted);">Menganalisis kendala operasional, alur administrasi, serta menentukan output yang dibutuhkan.</p>
+            <div class="glow-card step-card">
+                <div>
+                    <div class="step-num">01</div>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Audit & Diskusi Alur</h4>
+                    <p style="font-size: 13px; color: var(--text-muted);">Menganalisis kendala operasional, alur administrasi, serta menentukan output yang dibutuhkan.</p>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-num">02</div>
-                <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Rancangan Arsitektur</h4>
-                <p style="font-size: 13px; color: var(--text-muted);">Menyusun struktur database, tampilan antarmuka (UI/UX), dan alur logika sistem yang efisien.</p>
+            <div class="glow-card step-card">
+                <div>
+                    <div class="step-num">02</div>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Rancangan Arsitektur</h4>
+                    <p style="font-size: 13px; color: var(--text-muted);">Menyusun struktur database, tampilan antarmuka (UI/UX), dan alur logika sistem yang efisien.</p>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-num">03</div>
-                <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Development & Uji Coba</h4>
-                <p style="font-size: 13px; color: var(--text-muted);">Pengkodean presisi serta pengujian sistem secara ketat untuk memastikan tidak ada error saat dipakai.</p>
+            <div class="glow-card step-card">
+                <div>
+                    <div class="step-num">03</div>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Development & Uji Coba</h4>
+                    <p style="font-size: 13px; color: var(--text-muted);">Pengkodean presisi serta pengujian sistem secara ketat untuk memastikan tidak ada error saat dipakai.</p>
+                </div>
             </div>
-            <div class="step-card">
-                <div class="step-num">04</div>
-                <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Deployment & Support</h4>
-                <p style="font-size: 13px; color: var(--text-muted);">Peluncuran sistem ke server, pendampingan penggunaan tim, serta garansi pemeliharaan.</p>
+            <div class="glow-card step-card">
+                <div>
+                    <div class="step-num">04</div>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 8px;">Deployment & Support</h4>
+                    <p style="font-size: 13px; color: var(--text-muted);">Peluncuran sistem ke server, pendampingan penggunaan tim, serta garansi pemeliharaan.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT FORM -->
-    <section id="contact" class="section container" style="border-bottom: none;">
+    <section id="contact" class="section container reveal" style="border-bottom: none;">
         <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 800px; margin: 0 auto;">
             <div style="text-align: center; margin-bottom: 32px;">
                 <span class="section-tag">GET IN TOUCH</span>
@@ -537,7 +590,44 @@
 
     <!-- JAVASCRIPT HANDLERS -->
     <script>
-        // Modal Control
+        // 1. MOUSE GLOW TRACKING FOR CARDS
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.glow-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 3. PORTFOLIO FILTER HANDLER
+        function filterPort(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const cards = document.querySelectorAll('.port-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-cat') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // 4. MODAL POPUP HANDLERS
         function openModal(title, desc, features) {
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerText = desc;
@@ -564,7 +654,7 @@
             if (e.target.id === 'appModal') closeModal();
         }
 
-        // WhatsApp Direct Submit
+        // 5. WHATSAPP DIRECT SUBMIT FORM
         function sendWA(e) {
             e.preventDefault();
             const name = document.getElementById('txtName').value;
