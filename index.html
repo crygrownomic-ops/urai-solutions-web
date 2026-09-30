@@ -109,6 +109,19 @@
         }
         .btn-outline:hover { background: var(--bg-card); border-color: var(--text-muted); }
 
+        /* FLOATING WHATSAPP BUTTON */
+        .float-wa {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            background-color: #25D366; width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4); transition: all 0.3s ease;
+        }
+        .float-wa:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        .float-wa svg { fill: white; width: 32px; height: 32px; }
+
         /* HERO SECTION */
         .hero { padding-top: 160px; padding-bottom: 80px; border-bottom: 1px solid var(--border); }
         .hero-tag {
@@ -193,6 +206,24 @@
         }
         .port-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.2); }
 
+        /* FAQ ACCORDION */
+        .faq-item {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; 
+            margin-bottom: 12px; overflow: hidden; transition: all 0.3s ease;
+        }
+        .faq-item.active { border-color: var(--border-accent); }
+        .faq-question {
+            width: 100%; text-align: left; padding: 22px 24px; background: none; border: none;
+            color: #FFF; font-weight: 700; font-size: 16px; cursor: pointer; display: flex; 
+            justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .faq-icon { font-size: 24px; color: var(--accent-sky); font-weight: 400; transition: transform 0.3s ease; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0 24px; }
+        .faq-item.active .faq-answer { max-height: 400px; padding-bottom: 24px; }
+        .faq-answer p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 10px; }
+        .faq-answer p:last-child { margin-bottom: 0; }
+
         /* SCROLL REVEAL ANIMATION */
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -210,7 +241,7 @@
 
         /* MODAL POPUP */
         .modal-bg {
-            position: fixed; inset: 0; z-index: 200; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            position: fixed; inset: 0; z-index: 2000; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
             display: none; align-items: center; justify-content: center; padding: 20px;
         }
         .modal-bg.active { display: flex; }
@@ -230,10 +261,19 @@
             .hero-title { font-size: 30px; }
             .nav-menu { display: none; }
             .hero { padding-top: 130px; }
+            .float-wa { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            .float-wa svg { width: 26px; height: 26px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/6282254127596?text=Halo%20URAI%20SOLUTION,%20saya%20tertarik%20untuk%20diskusi%20kebutuhan%20pembuatan%20sistem." class="float-wa" target="_blank" aria-label="Chat via WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
 
     <!-- HEADER / NAVBAR -->
     <header>
@@ -252,13 +292,13 @@
             </a>
 
             <nav class="nav-menu">
-                <a href="#services">Layanan Utama</a>
+                <a href="#services">Layanan</a>
                 <a href="#portfolio">Portofolio</a>
                 <a href="#workflow">Metodologi</a>
-                <a href="#contact">Kontak</a>
+                <a href="#faq">FAQ</a>
             </nav>
 
-            <a href="https://wa.me/6282254127596?text=Halo%20URAI%20SOLUTION,%20saya%20ingin%20konsultasi%20pengembangan%20sistem." target="_blank" class="btn-cta">
+            <a href="#contact" class="btn-cta">
                 KONSULTASI PROYEK
             </a>
         </div>
@@ -541,6 +581,65 @@
         </div>
     </section>
 
+    <!-- FAQ SECTION -->
+    <section id="faq" class="section container reveal">
+        <div class="section-header" style="margin-bottom: 40px; text-align: center;">
+            <span class="section-tag">F.A.Q</span>
+            <h2 class="section-title">Pertanyaan Umum Klien</h2>
+            <p class="section-desc" style="margin: 0 auto;">Beberapa hal yang sering ditanyakan mengenai layanan, kepemilikan aset, dan infrastruktur sistem di URAI SOLUTION.</p>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    1. Apakah URAI SOLUTION menanggung biaya Server, Domain & Database? 
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Tidak.</strong> Biaya berlangganan infrastruktur (seperti penyewaan Server VPS/Cloud, kapasitas Database, dan nama Domain tahunan) adalah <strong>sepenuhnya tanggung jawab dan milik klien</strong>.</p>
+                    <p>Hal ini bertujuan agar seluruh infrastruktur dan aset digital terdaftar secara legal atas nama perusahaan Anda, bukan atas nama kami. Namun, tim URAI SOLUTION <strong>akan membantu seluruh proses instalasi, konfigurasi, dan <i>deployment</i> (penerbitan)</strong> sistem ke server Anda hingga sistem beroperasi 100% tanpa tambahan biaya jasa.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    2. Apakah kami mendapatkan full Hak Milik Source Code?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Ya, 100% Hak Milik.</strong> Setelah proyek selesai dikerjakan dan kewajiban pelunasan diselesaikan, seluruh <i>Source Code</i> (kode sumber) aplikasi sepenuhnya menjadi hak milik perusahaan Anda.</p>
+                    <p>Anda bebas mengelola, mengembangkan ulang, atau memodifikasi sistem tersebut di kemudian hari tanpa ada ikatan biaya lisensi perangkat lunak kepada URAI SOLUTION.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    3. Apakah ada garansi maintenance setelah sistem selesai?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Tentu ada.</strong> Kami memberikan masa garansi pemeliharaan dan <i>bug-fixing</i> (perbaikan error) pasca-peluncuran selama periode tertentu (umumnya 1 hingga 3 bulan, tergantung kompleksitas kontrak proyek).</p>
+                    <p>Garansi ini memastikan sistem berjalan stabil, lancar, dan sesuai dengan alur kerja operasional nyata di lapangan.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    4. Bagaimana skema pembayaran proyek pembuatan sistem?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Pembayaran dilakukan menggunakan <strong>Sistem Termin (Bertahap)</strong> yang transparan dan aman bagi kedua belah pihak.</p>
+                    <p>Umumnya, pengerjaan dimulai setelah pembayaran <i>Down Payment</i> (DP) termin pertama. Pelunasan akhir dilakukan hanya setelah sistem selesai dibangun, diuji coba (UAT - <i>User Acceptance Test</i>), dan siap di-<i>deploy</i> ke server perusahaan Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CONTACT FORM -->
     <section id="contact" class="section container reveal" style="border-bottom: none;">
         <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 800px; margin: 0 auto;">
@@ -601,7 +700,7 @@
             });
         });
 
-        // 2. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER)
+        // 2. SCROLL REVEAL ANIMATION
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -627,7 +726,21 @@
             });
         }
 
-        // 4. MODAL POPUP HANDLERS
+        // 4. FAQ ACCORDION TOGGLE
+        function toggleFAQ(btn) {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Tutup semua FAQ yang sedang terbuka
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            
+            // Jika sebelumnya tertutup, maka buka
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // 5. MODAL POPUP HANDLERS
         function openModal(title, desc, features) {
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerText = desc;
@@ -654,7 +767,7 @@
             if (e.target.id === 'appModal') closeModal();
         }
 
-        // 5. WHATSAPP DIRECT SUBMIT FORM
+        // 6. WHATSAPP DIRECT SUBMIT FORM
         function sendWA(e) {
             e.preventDefault();
             const name = document.getElementById('txtName').value;
